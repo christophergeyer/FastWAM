@@ -86,7 +86,7 @@ class Wan22Trainer:
         proprio_encoder = getattr(self.model, "proprio_encoder", None)
         if proprio_encoder is not None:
             trainable_params.extend(list(proprio_encoder.parameters()))
-        self.optimizer = torch.optim.AdamW(
+        self.optimizer = __import__("bitsandbytes.optim", fromlist=["AdamW8bit"]).AdamW8bit(
             trainable_params,
             lr=self.learning_rate,
             weight_decay=self.weight_decay,
